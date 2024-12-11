@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>F1dle</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F1dle</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="principal">
     <h1>
       <img class="logo" src="../imgs/logo.webp" alt="Logo" />
       F1dle
-      <img class="logo" src="../imgs/logo.webp" alt="logo" />
+      <img class="logo" src="../imgs/logo.webp" alt="Logo" />
     </h1>
     <div id="game-container">
-      <p>Adivina el piloto de Fórmula 1:</p>
-      <div id="hints"></div>
-      <input
-        type="text"
-        id="guess-input"
-        placeholder="Introduce tu respuesta..."
-      />
-      <button id="submit-guess">Adivinar</button>
+      <p>Guess the Formula 1 driver:</p>
+      <input type="text" id="guess-input" placeholder="Introduce your answer..." />
+      <button id="submit-guess">Guess</button>
+      <p id="messageDiv"></p>
       <div id="feedback"></div>
     </div>
-    <script src="script.js"></script>
-  </body>
+  </div>
+  <script src="script.js"></script>
+</body>
+
 </html>
