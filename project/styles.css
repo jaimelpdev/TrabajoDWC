@@ -1,5 +1,13 @@
-body, html{
-    background-image: url(../imgs/pilotos-f1-jpg.webp);
-    background-repeat: no-repeat;
-    background-size: cover;
+body,
+html {
+  background-image: url(../imgs/pilotos-f1-jpg.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+.logo {
+  width: 6%;
+  display: inline-block;
+  vertical-align: middle;
 }
