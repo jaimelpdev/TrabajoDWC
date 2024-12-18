@@ -9,11 +9,11 @@
 </head>
 
 <body>
-  <div class="principal">
+  <div id="principal">
     <h1>
-      <img class="logo" src="../imgs/logo.webp" alt="Logo" />
+      <img class="icon" src="../imgs/icon.webp" alt="icon" />
       F1dle
-      <img class="logo" src="../imgs/logo.webp" alt="Logo" />
+      <img class="icon" src="../imgs/icon.webp" alt="icon" />
     </h1>
     <div id="game-container">
       <p>Guess the Formula 1 driver:</p>
@@ -22,13 +22,13 @@
       <p id="messageDiv"></p>
       <div id="feedback"></div>
     </div>
-    <div id="point-store">
-      <h2>Point Store</h2>
-      <p>You have <span id="points">0</span> points.</p>
-      <button id="buy-item-1">Buy Item 1 (10 points)</button>
-      <button id="buy-item-2">Buy Item 2 (20 points)</button>
-      <button id="buy-item-3">Buy Item 3 (30 points)</button>
-    </div>
+  </div>
+  <div id="point-store">
+    <h2>Point Store</h2>
+    <p>You have <span id="points">0</span> points.</p>
+    <button id="buy-hint-team" data-cost="10">Buy a Hint To Appear When Start (10 points)</button>
+    <button id="buy-extra-attempt" data-cost="20">Buy Extra Attempt (20 points)</button>
+    <button id="buy-skip" data-cost="50">Buy 3 Extra Attempts (50 points)</button>
   </div>
   <script src="script.js"></script>
 </body>
