@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>F1dle</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 
 <body>
@@ -26,11 +27,14 @@
   <div id="point-store">
     <h2>Point Store</h2>
     <p>You have <span id="points">0</span> points.</p>
-    <button id="buy-hint-team" data-cost="10">Buy a Hint To Appear When Start (10 points)</button>
-    <button id="buy-extra-attempt" data-cost="20">Buy Extra Attempt (20 points)</button>
-    <button id="buy-skip" data-cost="50">Buy 3 Extra Attempts (50 points)</button>
+    <button class="icon"><i class="fa-solid fa-question"></i></button>
+    <button data-cost="10">Buy a Hint To Appear When Start (10 points)</button>
+    <button class="icon"></button>
+    <button data-cost="20">Buy Extra Attempt (20 points)</button>
+    <button data-cost="50">Buy 3 Extra Attempts (50 points)</button>
   </div>
   <script src="script.js"></script>
+  <script src="https://kit.fontawesome.com/30514317fc.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
