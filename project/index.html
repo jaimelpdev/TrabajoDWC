@@ -18,7 +18,7 @@
     </h1>
     <div id="game-container">
       <p>Guess the Formula 1 driver:</p>
-      <input type="text" id="guess-input" placeholder="Introduce your answer..." />
+      <input type="text" id="guess-input" placeholder="Introduce your anwser..." />
       <button id="submit-guess">Guess</button>
       <p id="messageDiv"></p>
       <div id="feedback"></div>
@@ -27,11 +27,12 @@
   <div id="point-store">
     <h2>Point Store</h2>
     <p>You have <span id="points">0</span> points.</p>
-    <button class="icon"><i class="fa-solid fa-question"></i></button>
-    <button data-cost="10">Buy a Hint To Appear When Start (10 points)</button>
-    <button class="icon"></button>
-    <button data-cost="20">Buy Extra Attempt (20 points)</button>
-    <button data-cost="50">Buy 3 Extra Attempts (50 points)</button>
+    <i class="icon fa-solid fa-question"></i>
+    <button id="button1" data-cost="0">Buy a Hint To Appear When Start (10 points)</button>
+    <i class="icon fa-solid fa-1"></i>
+    <button id="button2" data-cost="0">Buy Extra Attempt (20 points)</button>
+    <i class="icon fa-solid fa-3"></i>
+    <button id="button3" data-cost="0">Buy 3 Extra Attempts (50 points)</button>
   </div>
   <script src="script.js"></script>
   <script src="https://kit.fontawesome.com/30514317fc.js" crossorigin="anonymous"></script>

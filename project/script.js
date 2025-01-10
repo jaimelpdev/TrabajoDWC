@@ -1,4 +1,6 @@
 let points = 0;
+let extraAttempts = 0;
+hintPurchased = false;
 
 // Function to load drivers from JSON file
 async function loadDrivers() {
@@ -35,16 +37,89 @@ function getRandomHint(selectedDriver) {
   }
 }
 
+// Function to update points display and save to localStorage
+function updatePoints() {
+  const pointsSpan = document.getElementById("points");
+  pointsSpan.innerText = points;
+  localStorage.setItem("points", points);
+  localStorage.setItem("hintPurchased", hintPurchased); // Save hintPurchased state
+}
+
+// Function to load points from localStorage
+function loadPoints() {
+  const savedPoints = localStorage.getItem("points");
+  if (savedPoints !== null) {
+    points = parseInt(savedPoints);
+  }
+  const savedHintPurchased = localStorage.getItem("hintPurchased");
+  if (savedHintPurchased !== null) {
+    hintPurchased = savedHintPurchased === "true";
+  }
+  updatePoints();
+}
+
+// Function to handle point store purchases
+function setupPointStore() {
+  const storeButtons = document.querySelectorAll("#point-store button");
+  storeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const cost = parseInt(button.getAttribute("data-cost"));
+      if (points >= cost) {
+        points -= cost;
+        updatePoints();
+        applyPurchaseEffect(button.innerText); // Apply the effect of the purchased item
+        alert(`You bought ${button.innerText}`);
+      } else {
+        alert("Not enough points!");
+      }
+    });
+  });
+}
+
+// Function to apply the effect of the purchased item
+function applyPurchaseEffect(itemName) {
+  const button1 = document.getElementById("button1");
+  const button2 = document.getElementById("button2");
+  const button3 = document.getElementById("button3");
+
+  if (button1 && button2 && button3) {
+    switch (itemName) {
+      case button1.innerHTML:
+        hintPurchased = true;
+        break;
+      case button2.innerHTML:
+        extraAttempts += 1;
+        break;
+      case button3.innerHTML:
+        extraAttempts += 3;
+        break;
+      default:
+        console.error("Unknown item purchased");
+    }
+    updatePoints();
+  } else {
+    console.error("One or more buttons are missing in the DOM");
+  }
+}
+
 // Function to start the guessing game
 async function startGuessingGame() {
   const selectedDriver = await selectRandomDriver();
-  let attemptsLeft = 3; // Number of attempts will be 3
-  let tries = 1;
-  let guessedCorrectly = false;
 
   const messageDiv = document.getElementById("messageDiv");
-  messageDiv.innerHTML =
-    "Guess the F1 driver! You have " + attemptsLeft + " attempts.";
+
+  let attemptsLeft = 3 + extraAttempts; // Base attempts plus any extra attempts purchased
+
+  if (hintPurchased) {
+    const hint = getRandomHint(selectedDriver);
+    messageDiv.innerHTML = `Hint: ${hint}`;
+  } else {
+    messageDiv.innerHTML =
+      "Guess the F1 driver! You have " + attemptsLeft + " attempts.";
+  }
+
+  let tries = 1;
+  let guessedCorrectly = false;
 
   const submitButton = document.getElementById("submit-guess");
 
@@ -76,39 +151,6 @@ async function startGuessingGame() {
       const hint = getRandomHint(selectedDriver);
       messageDiv.innerHTML = `Incorrect! ${hint}. You have ${attemptsLeft} attempts left.`;
     }
-  });
-}
-
-// Function to update points display and save to localStorage
-function updatePoints() {
-  const pointsSpan = document.getElementById("points");
-  pointsSpan.innerText = points;
-  localStorage.setItem("points", points);
-}
-
-// Function to load points from localStorage
-function loadPoints() {
-  const savedPoints = localStorage.getItem("points");
-  if (savedPoints !== null) {
-    points = parseInt(savedPoints);
-  }
-  updatePoints();
-}
-
-// Function to handle point store purchases
-function setupPointStore() {
-  const storeButtons = document.querySelectorAll("#point-store button");
-  storeButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const cost = parseInt(button.getAttribute("data-cost"));
-      if (points >= cost) {
-        points -= cost;
-        updatePoints();
-        alert(`You bought ${button.innerText}`);
-      } else {
-        alert("Not enough points!");
-      }
-    });
   });
 }
 

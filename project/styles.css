@@ -75,11 +75,11 @@ h2{
   border: none;
   cursor: pointer;
 }
-
 #point-store button:hover {
   background-color: #7c7c7c;
 }
 
 i {
-  font-size: 150%;
+  font-size: 120%;
+  margin-top: 2%;
 }
