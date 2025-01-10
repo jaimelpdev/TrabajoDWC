@@ -42,7 +42,7 @@ h1 {
 }
 
 #point-store {
-  height: 40%;
+  height: 50%;
   width: 40%;
   font-size: 1.4em;
   color: white;
@@ -50,7 +50,36 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 2%;
+  margin-top: 1%;
   background-color: rgba(85, 85, 85, 0.8);
-  border: 2px solid white;
+  border: 1% solid white;
+}
+
+h2{
+  margin: 0;
+}
+
+#point-store h2 {
+  margin-bottom: 2%;
+} 
+
+#point-store p {
+  margin: 2% 0;
+}
+
+#point-store button {
+  margin: 5px 0;
+  padding: 10px;
+  background-color: #222222;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#point-store button:hover {
+  background-color: #7c7c7c;
+}
+
+i {
+  font-size: 150%;
 }
