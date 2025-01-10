@@ -1,6 +1,6 @@
 let points = 0;
 let extraAttempts = 0;
-hintPurchased = false;
+let hintPurchased = false;
 
 // Function to load drivers from JSON file
 async function loadDrivers() {
@@ -42,7 +42,6 @@ function updatePoints() {
   const pointsSpan = document.getElementById("points");
   pointsSpan.innerText = points;
   localStorage.setItem("points", points);
-  localStorage.setItem("hintPurchased", hintPurchased); // Save hintPurchased state
 }
 
 // Function to load points from localStorage
@@ -97,13 +96,32 @@ function applyPurchaseEffect(itemName) {
         console.error("Unknown item purchased");
     }
     updatePoints();
-  } else {
-    console.error("One or more buttons are missing in the DOM");
+  }
+}
+
+// Function to use purchased items during the game
+function usePurchasedItems() {
+  if (hintPurchased) {
+    // Provide a hint
+    const hint = getRandomHint(selectedDriver);
+    alert(`Hint: ${hint}`);
+    hintPurchased = false; // Use the hint
+  }
+
+  // Use extra attempts if needed
+  if (extraAttempts > 0) {
+    // Allow extra attempts
+    extraAttempts--;
   }
 }
 
 // Function to start the guessing game
 async function startGuessingGame() {
+  // Reset purchased items
+  hintPurchased = false;
+  extraAttempts = 0;
+  updatePoints();
+
   const selectedDriver = await selectRandomDriver();
 
   const messageDiv = document.getElementById("messageDiv");
@@ -119,7 +137,6 @@ async function startGuessingGame() {
   }
 
   let tries = 1;
-  let guessedCorrectly = false;
 
   const submitButton = document.getElementById("submit-guess");
 
