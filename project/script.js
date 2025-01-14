@@ -108,6 +108,18 @@ function setupPointStore() {
   });
 }
 
+// Function to purchase hint
+function purchaseHint() {
+  hintPurchased = true;
+  console.log("Hint purchased");
+}
+
+// Function to purchase extra attempts
+function purchaseExtraAttempts(attempts) {
+  extraAttempts += attempts;
+  console.log(`Extra attempts purchased: ${attempts}`);
+}
+
 // Function to apply the effect of the purchased item
 function applyPurchaseEffect(itemName) {
   const button1 = document.getElementById("button1");
@@ -130,18 +142,6 @@ function applyPurchaseEffect(itemName) {
     }
     updatePoints();
   }
-}
-
-// Function to purchase hint
-function purchaseHint() {
-  hintPurchased = true;
-  console.log("Hint purchased");
-}
-
-// Function to purchase extra attempts
-function purchaseExtraAttempts(attempts) {
-  extraAttempts += attempts;
-  console.log(`Extra attempts purchased: ${attempts}`);
 }
 
 // Function to use purchased items during the game
