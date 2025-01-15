@@ -10,12 +10,9 @@ async function startGuessingGame() {
 
   let attemptsLeft = 3 + extraAttempts; // Base attempts plus any extra attempts purchased
 
-  usePurchasedItems(selectedDriver, messageDiv); // Use purchased items at the start
+  usePurchasedItems(selectedDriver); // Use purchased items at the start
 
-  if (hintPurchased) {
-    const hint = getRandomHint(selectedDriver);
-    messageDiv.innerHTML = `Hint: ${hint}`;
-  } else {
+  if (!hintPurchased) {
     messageDiv.innerHTML =
       "Guess the F1 driver! You have " + attemptsLeft + " attempts.";
   }
@@ -69,12 +66,60 @@ async function selectRandomDriver() {
   return f1Drivers[index]; // Return the entire driver object
 }
 
-// Function to update points display and save to localStorage
+// Function to handle point store purchases
+function setupPointStore() {
+  const storeButtons = document.querySelectorAll("#point-store button");
+  storeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const cost = parseInt(button.getAttribute("data-cost"));
+      if (points >= cost) {
+        points -= cost;
+        updatePoints();
+        applyPurchaseEffect(button.id); // Use button id instead of innerText
+        alert(`You bought ${button.innerText}`);
+      } else {
+        alert("Not enough points!");
+      }
+    });
+  });
+}
+
+// Function to apply the effect of the purchased item
+function applyPurchaseEffect(buttonId) {
+  switch (buttonId) {
+    case "button1":
+      purchaseHint();
+      break;
+    case "button2":
+      purchaseExtraAttempts(1);
+      break;
+    case "button3":
+      purchaseExtraAttempts(3);
+      break;
+    default:
+      alert("Unknown item purchased");
+  }
+  updatePoints();
+}
+
+// Function to purchase hint
+function purchaseHint() {
+  hintPurchased = true;
+  localStorage.setItem("hintPurchased", "true");
+  console.log("Hint purchased");
+}
+
+// Function to purchase extra attempts
+function purchaseExtraAttempts(attempts) {
+  extraAttempts += attempts;
+  localStorage.setItem("extraAttempts", extraAttempts.toString());
+  console.log(`Extra attempts purchased: ${attempts}`);
+}
+
+// Function to update points display
 function updatePoints() {
-  const pointsSpan = document.getElementById("points");
-  pointsSpan.innerText = points;
-  localStorage.setItem("points", points);
-  console.log(`Points: ${points}`);
+  document.getElementById("points").innerText = points;
+  localStorage.setItem("points", points.toString());
 }
 
 // Function to load points from localStorage
@@ -87,76 +132,36 @@ function loadPoints() {
   if (savedHintPurchased !== null) {
     hintPurchased = savedHintPurchased === "true";
   }
+  const savedExtraAttempts = localStorage.getItem("extraAttempts");
+  if (savedExtraAttempts !== null) {
+    extraAttempts = parseInt(savedExtraAttempts);
+  }
   updatePoints();
 }
 
-// Function to handle point store purchases
-function setupPointStore() {
-  const storeButtons = document.querySelectorAll("#point-store button");
-  storeButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const cost = parseInt(button.getAttribute("data-cost"));
-      if (points >= cost) {
-        points -= cost;
-        updatePoints();
-        applyPurchaseEffect(button.innerText); // Apply the effect of the purchased item
-        alert(`You bought ${button.innerText}`);
-      } else {
-        alert("Not enough points!");
-      }
-    });
-  });
-}
-
-// Function to purchase hint
-function purchaseHint() {
-  hintPurchased = true;
-  console.log("Hint purchased");
-}
-
-// Function to purchase extra attempts
-function purchaseExtraAttempts(attempts) {
-  extraAttempts += attempts;
-  console.log(`Extra attempts purchased: ${attempts}`);
-}
-
-// Function to apply the effect of the purchased item
-function applyPurchaseEffect(itemName) {
-  const button1 = document.getElementById("button1");
-  const button2 = document.getElementById("button2");
-  const button3 = document.getElementById("button3");
-
-  if (button1 && button2 && button3) {
-    switch (itemName) {
-      case button1.innerText:
-        purchaseHint();
-        break;
-      case button2.innerText:
-        purchaseExtraAttempts(1);
-        break;
-      case button3.innerText:
-        purchaseExtraAttempts(3);
-        break;
-      default:
-        alert("Unknown item purchased");
-    }
-    updatePoints();
-  }
-}
-
 // Function to use purchased items during the game
-function usePurchasedItems(selectedDriver, messageDiv) {
+function usePurchasedItems(selectedDriver) {
+  const messageDiv = document.getElementById("messageDiv");
+  if (!messageDiv) {
+    console.error("messageDiv not found");
+    return;
+  }
+
   if (hintPurchased) {
     // Provide a hint
     const hint = getRandomHint(selectedDriver);
     messageDiv.innerHTML = `Hint: ${hint}`;
     hintPurchased = false; // Use the hint
+    localStorage.setItem("hintPurchased", "false");
+  } else {
+    messageDiv.innerHTML = ""; // Clear message if no hint is available
   }
 
   // Use extra attempts if needed
   if (extraAttempts > 0) {
     // Allow extra attempts
     extraAttempts--;
+    localStorage.setItem("extraAttempts", extraAttempts.toString());
   }
 }
 
