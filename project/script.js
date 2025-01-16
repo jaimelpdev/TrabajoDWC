@@ -86,15 +86,15 @@ function setupPointStore() {
 
 // Function to apply the effect of the purchased item
 function applyPurchaseEffect(buttonId) {
+  const button = document.getElementById(buttonId);
+  button.disabled = true; // Disable the button after purchase
+
   switch (buttonId) {
     case "button1":
-      purchaseHint();
+      purchaseExtraAttempts(1, button);
       break;
     case "button2":
-      purchaseExtraAttempts(1);
-      break;
-    case "button3":
-      purchaseExtraAttempts(3);
+      purchaseExtraAttempts(3, button);
       break;
     default:
       alert("Unknown item purchased");
@@ -102,15 +102,8 @@ function applyPurchaseEffect(buttonId) {
   updatePoints();
 }
 
-// Function to purchase hint
-function purchaseHint() {
-  hintPurchased = true;
-  localStorage.setItem("hintPurchased", "true");
-  console.log("Hint purchased");
-}
-
 // Function to purchase extra attempts
-function purchaseExtraAttempts(attempts) {
+function purchaseExtraAttempts(attempts, button) {
   extraAttempts += attempts;
   localStorage.setItem("extraAttempts", extraAttempts.toString());
   console.log(`Extra attempts purchased: ${attempts}`);
@@ -147,21 +140,15 @@ function usePurchasedItems(selectedDriver) {
     return;
   }
 
-  if (hintPurchased) {
-    // Provide a hint
-    const hint = getRandomHint(selectedDriver);
-    messageDiv.innerHTML = `Hint: ${hint}`;
-    hintPurchased = false; // Use the hint
-    localStorage.setItem("hintPurchased", "false");
-  } else {
-    messageDiv.innerHTML = ""; // Clear message if no hint is available
-  }
-
   // Use extra attempts if needed
   if (extraAttempts > 0) {
     // Allow extra attempts
     extraAttempts--;
     localStorage.setItem("extraAttempts", extraAttempts.toString());
+    if (extraAttempts === 0) {
+      document.getElementById("button1").disabled = false; // Re-enable the button
+      document.getElementById("button2").disabled = false; // Re-enable the button
+    }
   }
 }
 
@@ -191,4 +178,5 @@ window.onload = function () {
   loadPoints();
   startGuessingGame();
   setupPointStore();
+  disablePurchasedButtons();
 };
