@@ -1,4 +1,3 @@
 # TrabajoDWC<br>
  
-API:<br>
-https://ergast.com/mrd/methods/drivers/
+Open all with Go Live please
