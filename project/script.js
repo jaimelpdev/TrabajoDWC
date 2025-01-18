@@ -1,5 +1,4 @@
 let points = 0;
-let hintPurchased = false;
 let extraAttempts = 0;
 
 // Function to start the guessing game
@@ -12,10 +11,8 @@ async function startGuessingGame() {
 
   usePurchasedItems(selectedDriver); // Use purchased items at the start
 
-  if (!hintPurchased) {
-    messageDiv.innerHTML =
-      "Guess the F1 driver! You have " + attemptsLeft + " attempts.";
-  }
+  messageDiv.innerHTML =
+    "Guess the F1 driver! You have " + attemptsLeft + " attempts."; // Initial message
 
   let tries = 1;
 
@@ -120,10 +117,6 @@ function loadPoints() {
   const savedPoints = localStorage.getItem("points");
   if (savedPoints !== null) {
     points = parseInt(savedPoints);
-  }
-  const savedHintPurchased = localStorage.getItem("hintPurchased");
-  if (savedHintPurchased !== null) {
-    hintPurchased = savedHintPurchased === "true";
   }
   const savedExtraAttempts = localStorage.getItem("extraAttempts");
   if (savedExtraAttempts !== null) {
